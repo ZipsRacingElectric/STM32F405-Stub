@@ -1,9 +1,13 @@
 # STM32F405 Stub Project
-## Dependencies
+## Dependencies (Required)
 - openocd
 - arm-none-eabi-gcc
-- arm-none-eabi-gdb
 - ChibiOS source
+- FFMP
+
+## Dependencies (Optional)
+- Cortex Debug
+- arm-none-eabi-gdb
 
 ## Setup
 - Clone the ChibiOS source repo locally.
@@ -12,12 +16,14 @@
 ## Usage
 ### Compilation
 - 'make'
+
 ### Programming
 - 'make flash'
+
 ### Debugging
-- In VS-code, use 'run debugger'
+- In VS-code, use 'Run Debugger'
 
 ## Filesystem
 - build - Compilation output, includes main.elf (the application file).
-- cfg - ChibiOS configuration files.
+- config - ChibiOS configuration files.
 - src - Project source code.

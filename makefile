@@ -54,7 +54,7 @@ MCU  = cortex-m4
 
 # Imported source files and paths.
 CHIBIOS  := ${CHIBIOS_SOURCE_PATH}
-CONFDIR  := ./cfg
+CONFDIR  := ./config
 BUILDDIR := ./build
 DEPDIR   := ./build/dep
 
@@ -70,10 +70,8 @@ include $(CHIBIOS)/os/hal/ports/STM32/STM32F4xx/platform.mk
 include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
 
 # Board Files
-BOARDSRC = $(CHIBIOS)/os/hal/boards/ST_STM32F4_DISCOVERY/board.c
-BOARDINC = $(CHIBIOS)/os/hal/boards/ST_STM32F4_DISCOVERY
-ALLCSRC += $(BOARDSRC)
-ALLINC  += $(BOARDINC)
+ALLCSRC += $(BUILDDIR)/board/board.c
+ALLINC  += $(BUILDDIR)/board/
 
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
@@ -137,6 +135,13 @@ ULIBS =
 RULESPATH = $(CHIBIOS)/os/common/startup/ARMCMx/compilers/GCC/mk
 include $(RULESPATH)/arm-none-eabi.mk
 include $(RULESPATH)/rules.mk
+
+# Board File Generation -------------------------------------------------------------------------------------------------------
+
+board.h: $(CONFDIR)/board.chcfg $(CONFDIR)/board.fmpp
+	mkdir -p $(BUILDDIR)/board
+
+# TODO(Barach): FFMP 
 
 # Board Programming -----------------------------------------------------------------------------------------------------------
 
