@@ -16,9 +16,9 @@ static THD_FUNCTION (heartbeatThread, arg)
 	while (true)
 	{
 		// palSetLine (0);
-		chThdSleepMilliseconds (500);
+		chThdSleepMilliseconds (10000);
 		// palClearLine (0);
-		chThdSleepMilliseconds (500);
+		chThdSleepMilliseconds (10000);
 	}
 }
 

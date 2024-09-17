@@ -3,7 +3,6 @@
 - openocd
 - arm-none-eabi-gcc
 - ChibiOS source
-- FFMP
 
 ## Dependencies (Optional)
 - Cortex Debug

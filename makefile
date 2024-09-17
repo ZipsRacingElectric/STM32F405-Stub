@@ -70,8 +70,8 @@ include $(CHIBIOS)/os/hal/ports/STM32/STM32F4xx/platform.mk
 include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
 
 # Board Files
-ALLCSRC += $(BUILDDIR)/board/board.c
-ALLINC  += $(BUILDDIR)/board/
+ALLCSRC += $(CONFDIR)/board.c
+ALLINC  += $(CONFDIR)/
 
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
@@ -135,13 +135,6 @@ ULIBS =
 RULESPATH = $(CHIBIOS)/os/common/startup/ARMCMx/compilers/GCC/mk
 include $(RULESPATH)/arm-none-eabi.mk
 include $(RULESPATH)/rules.mk
-
-# Board File Generation -------------------------------------------------------------------------------------------------------
-
-board.h: $(CONFDIR)/board.chcfg $(CONFDIR)/board.fmpp
-	mkdir -p $(BUILDDIR)/board
-
-# TODO(Barach): FFMP 
 
 # Board Programming -----------------------------------------------------------------------------------------------------------
 
