@@ -143,10 +143,10 @@
       <pin15
         ID="LED_HEARTBEAT"
         Type="PushPull"
-        Level="High"
+        Level="Low"
         Speed="Maximum"
         Resistor="PullUp"
-        Mode="Input"
+        Mode="Output"
         Alternate="0" />
     </GPIOA>
     <GPIOB>

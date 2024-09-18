@@ -16,15 +16,15 @@ static THD_FUNCTION (heartbeatThread, arg)
 	while (true)
 	{
 		palSetLine (LINE_LED_HEARTBEAT);
-		chThdSleepMilliseconds (10000);
+		chThdSleepMilliseconds (500);
 		palClearLine (LINE_LED_HEARTBEAT);
-		chThdSleepMilliseconds (10000);
+		chThdSleepMilliseconds (500);
 	}
 }
 
 // Entrypoint -----------------------------------------------------------------------------------------------------------------
 
-int main(void)
+int main (void)
 {
 	// ChibiOS Initialization
 	halInit ();
