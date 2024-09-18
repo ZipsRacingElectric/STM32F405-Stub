@@ -138,12 +138,16 @@ include $(RULESPATH)/rules.mk
 
 # Board Files -----------------------------------------------------------------------------------------------------------------
 
-$(BUILDDIR)/board/board.h: board_files
-$(BUILDDIR)/board/board.c: board_files
+BOARD_CONF := $(CONFDIR)/board.chcfg $(CONFDIR)/board.fmpp
+BOARD_FILES := $(BUILDDIR)/board/board.h $(BUILDDIR)/board/board.c
 
-board_files:
+PRE_MAKE_ALL_RULE_HOOK: $(BOARD_FILES)
+
+$(BOARD_FILES) &: $(BOARD_CONF)
 	mkdir -p $(BUILDDIR)/board
-	fmpp -C $(CONFDIR)/board.fmpp --data-root=$(CONFDIR) -S $(CHIBIOS_SOURCE_PATH)/tools/ftl/processors/boards/stm32f4xx/templates --freemarker-links=lib:$(CHIBIOS_SOURCE_PATH)/tools/ftl/libs -O $(BUILDDIR)/board
+	fmpp -C $(CONFDIR)/board.fmpp --data-root=$(CONFDIR) -S									\
+		$(CHIBIOS_SOURCE_PATH)/tools/ftl/processors/boards/stm32f4xx/templates				\
+		--freemarker-links=lib:$(CHIBIOS_SOURCE_PATH)/tools/ftl/libs -O $(BUILDDIR)/board
 
 # Board Programming -----------------------------------------------------------------------------------------------------------
 
