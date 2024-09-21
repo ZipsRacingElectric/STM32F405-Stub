@@ -47,16 +47,17 @@ USE_FPU_OPT = -mfloat-abi=$(USE_FPU) -mfpu=fpv4-sp-d16
 # Project, Target, Sources & Paths --------------------------------------------------------------------------------------------
 
 # Define project name here
-PROJECT = main
+PROJECT = stub
 
 # Target settings.
 MCU  = cortex-m4
 
 # Imported source files and paths.
-CHIBIOS  := ${CHIBIOS_SOURCE_PATH}
+CHIBIOS  := $(CHIBIOS_SOURCE_PATH)
 CONFDIR  := ./config
 BUILDDIR := ./build
 DEPDIR   := ./build/dep
+BOARDDIR := ./build/board
 
 # Licensing files.
 include $(CHIBIOS)/os/license/license.mk
@@ -70,8 +71,8 @@ include $(CHIBIOS)/os/hal/ports/STM32/STM32F4xx/platform.mk
 include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
 
 # Board Files
-ALLCSRC += $(BUILDDIR)/board/board.c
-ALLINC  += $(BUILDDIR)/board/
+ALLCSRC += $(BOARDDIR)/board.c
+ALLINC += $(BOARDDIR)
 
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
@@ -139,15 +140,15 @@ include $(RULESPATH)/rules.mk
 # Board Files -----------------------------------------------------------------------------------------------------------------
 
 BOARD_CONF := $(CONFDIR)/board.chcfg $(CONFDIR)/board.fmpp
-BOARD_FILES := $(BUILDDIR)/board/board.h $(BUILDDIR)/board/board.c
+BOARD_FILES := $(BOARDDIR)/board.h $(BOARDDIR)/board.c
 
 PRE_MAKE_ALL_RULE_HOOK: $(BOARD_FILES)
 
 $(BOARD_FILES) &: $(BOARD_CONF)
-	mkdir -p $(BUILDDIR)/board
+	mkdir -p $(BOARDDIR)
 	fmpp -C $(CONFDIR)/board.fmpp --data-root=$(CONFDIR) -S									\
 		$(CHIBIOS_SOURCE_PATH)/tools/ftl/processors/boards/stm32f4xx/templates				\
-		--freemarker-links=lib:$(CHIBIOS_SOURCE_PATH)/tools/ftl/libs -O $(BUILDDIR)/board
+		--freemarker-links=lib:$(CHIBIOS_SOURCE_PATH)/tools/ftl/libs -O $(BOARDDIR)
 
 # Board Programming -----------------------------------------------------------------------------------------------------------
 

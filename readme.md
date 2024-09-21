@@ -1,8 +1,10 @@
 # STM32F405 Stub Project
 ## Dependencies (Required)
+- make
 - openocd
 - arm-none-eabi-gcc
-- ChibiOS source
+- ChibiOS 21.11.03
+- FMPP - FreeMark Pre-Processor
 
 ## Dependencies (Optional)
 - Cortex Debug
@@ -14,13 +16,14 @@
 
 ## Usage
 ### Compilation
-- 'make'
+- Use 'make' to compile the program. Files that have not been modified will not re-compiled.
+- Use 'make clean' to delete all build files.
 
 ### Programming
-- 'make flash'
+- Use 'make flash' to call OpenOCD. If modifications were made, the program will be recompiled.
 
 ### Debugging
-- In VS-code, use 'Run Debugger'
+- In VS-code, use 'Run Debugger'.
 
 ## Filesystem
 - build - Compilation output, includes main.elf (the application file).
