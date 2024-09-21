@@ -150,6 +150,8 @@ $(BOARD_FILES) &: $(BOARD_CONF)
 		$(CHIBIOS_SOURCE_PATH)/tools/ftl/processors/boards/stm32f4xx/templates				\
 		--freemarker-links=lib:$(CHIBIOS_SOURCE_PATH)/tools/ftl/libs -O $(BOARDDIR)
 
+board_files: $(BOARD_FILES)
+
 # Board Programming -----------------------------------------------------------------------------------------------------------
 
 flash: build/$(PROJECT).elf

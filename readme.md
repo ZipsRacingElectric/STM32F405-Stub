@@ -26,6 +26,6 @@
 - In VS-code, use 'Run Debugger'.
 
 ## Filesystem
-- build - Compilation output, includes main.elf (the application file).
+- build - Compilation output, includes the .elf file (the application file).
 - config - ChibiOS configuration files.
 - src - Project source code.
