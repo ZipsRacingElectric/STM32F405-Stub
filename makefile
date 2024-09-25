@@ -59,6 +59,8 @@ BUILDDIR := ./build
 DEPDIR   := ./build/dep
 BOARDDIR := ./build/board
 
+ALLINC += $(CURDIR)/$(CONFDIR)
+
 # Licensing files.
 include $(CHIBIOS)/os/license/license.mk
 
@@ -72,7 +74,7 @@ include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
 
 # Board Files
 ALLCSRC += $(BOARDDIR)/board.c
-ALLINC += $(BOARDDIR)
+ALLINC += $(CURDIR)/$(BOARDDIR)
 
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
@@ -140,15 +142,41 @@ include $(RULESPATH)/rules.mk
 BOARD_CONF := $(CONFDIR)/board.chcfg $(CONFDIR)/board.fmpp
 BOARD_FILES := $(BOARDDIR)/board.h $(BOARDDIR)/board.c
 
-PRE_MAKE_ALL_RULE_HOOK: $(BOARD_FILES)
-
 $(BOARD_FILES) &: $(BOARD_CONF)
 	mkdir -p $(BOARDDIR)
 	fmpp -C $(CONFDIR)/board.fmpp --data-root=$(CONFDIR) -S									\
 		$(CHIBIOS_SOURCE_PATH)/tools/ftl/processors/boards/stm32f4xx/templates				\
 		--freemarker-links=lib:$(CHIBIOS_SOURCE_PATH)/tools/ftl/libs -O $(BOARDDIR)
 
-board_files: $(BOARD_FILES)
+board-files: $(BOARD_FILES)
+
+# Clangd Files ----------------------------------------------------------------------------------------------------------------
+
+CLANGD_FILE := $(BUILDDIR)/compile_commands.json
+
+# This generates the Clangd compile_commands.json file.
+$(CLANGD_FILE): $(ALLCSRC) $(ALLINC)
+	rm -f $(BUILDDIR)/compile_commands.json;
+	mkdir -p $(BUILDDIR);
+	printf "[\n"													>> $(CLANGD_FILE);
+	for c in $(ALLCSRC); do \
+		printf "\t{\n"												>> $(CLANGD_FILE); \
+		printf "\t\t\"directory\": \"$(CURDIR)/$(BUILDDIR)\",\n"	>> $(CLANGD_FILE); \
+		printf "\t\t\"command\": \"arm-none-eabi-gcc"				>> $(CLANGD_FILE); \
+		for i in $(ALLINC); do \
+			printf "%s" " -I$$i"									>> $(CLANGD_FILE); \
+		done; \
+		printf "\",\n"												>> $(CLANGD_FILE); \
+		printf "\t\t\"file\": \"$$c\"\n"							>> $(CLANGD_FILE); \
+		printf "\t},\n"												>> $(CLANGD_FILE); \
+	done;
+	printf "]\n"													>> $(CLANGD_FILE);
+
+clangd-file: $(CLANGD_FILE)
+
+# ChibiOS Hooks ---------------------------------------------------------------------------------------------------------------
+
+PRE_MAKE_ALL_RULE_HOOK: $(BOARD_FILES) $(CLANGD_FILE)
 
 # Board Programming -----------------------------------------------------------------------------------------------------------
 

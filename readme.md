@@ -8,6 +8,8 @@
 
 ## Dependencies (Optional)
 - Cortex Debug
+- Clangd
+- Redhat XML VS-Code extension
 - arm-none-eabi-gdb
 
 ## Setup

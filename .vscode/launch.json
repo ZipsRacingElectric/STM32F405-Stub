@@ -15,7 +15,8 @@
 			[
 				"interface/stlink.cfg",
 				"target/stm32f4x.cfg"
-			]
+			],
+			"preLaunchTask": "build"
 		},
 	]
 }
