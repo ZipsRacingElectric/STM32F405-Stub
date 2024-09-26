@@ -1,20 +1,25 @@
 # STM32F405 Stub Project
-## Dependencies (Required)
+## Dependencies
 - make
-- openocd
 - arm-none-eabi-gcc
-- ChibiOS 21.11.03
+- openocd
+- ChibiOS 21.11.3
 - FMPP - FreeMark Pre-Processor
 
-## Dependencies (Optional)
-- Cortex Debug
-- Clangd
-- Redhat XML VS-Code extension
-- arm-none-eabi-gdb
-
 ## Setup
-- Clone the ChibiOS source repo locally.
-- Define the "CHIBIOS_SOURCE_PATH" environment variable to point to the location the ChibiOS repo.
+- Download and extract ChibiOS 21.11.3 (https://github.com/ChibiOS/ChibiOS/releases/tag/ver21.11.3).
+- Define the "CHIBIOS_SOURCE_PATH" environment variable to point to the location the ChibiOS source.
+
+### For Windows
+
+
+### Recommended VS-Code Extensions
+- C/C++
+- Clangd
+- Cortex-Debug
+- Doxygen
+- Doxygen Documentation Generator
+- RedHat XML
 
 ## Usage
 ### Compilation
