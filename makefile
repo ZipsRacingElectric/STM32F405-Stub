@@ -31,10 +31,7 @@ ULIBDIR =
 ULIBS =
 
 # Common toolchain includes
-include common/chibios.mk
-include common/board.mk
-include common/clangd.mk
-include common/openocd.mk
+include common/makefile
 
 # ChibiOS compilation hooks
 PRE_MAKE_ALL_RULE_HOOK: $(BOARD_FILES) $(CLANGD_FILE)
