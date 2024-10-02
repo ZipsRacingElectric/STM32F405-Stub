@@ -7,11 +7,15 @@
 - FMPP - FreeMark Pre-Processor
 
 ## Setup
+- Clone this repo using 'git clone <TODO(Barach)>'
+- Initialize the repo's submodule using 'git submodule init <TODO(Barach)>'
 - Download and extract ChibiOS 21.11.3 (https://github.com/ChibiOS/ChibiOS/releases/tag/ver21.11.3).
 - Define the "CHIBIOS_SOURCE_PATH" environment variable to point to the location the ChibiOS source.
 
 ### For Windows
-
+Most dependicies of this project are not natively built for Windows. A solution to this is to use MinGW, a <TODO(Barach)> that allows these programs to be used with Windows.
+- Install MinGW
+- <TODO(Barach)>
 
 ### Recommended VS-Code Extensions
 - C/C++

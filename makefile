@@ -30,6 +30,9 @@ ULIBDIR =
 # Libraries
 ULIBS =
 
+# ChibiOS extra includes
+include $(CHIBIOS)/os/hal/lib/streams/streams.mk
+
 # Common toolchain includes
 include common/makefile
 
