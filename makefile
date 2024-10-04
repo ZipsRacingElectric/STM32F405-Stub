@@ -15,6 +15,9 @@ CSRC =	$(ALLCSRC)		\
 		src/main.c		\
 		src/debug.c
 
+# Compiler flags
+USE_OPT = -O0 
+
 # C macro definitions
 UDEFS =
 
