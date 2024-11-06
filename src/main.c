@@ -22,3 +22,8 @@ int main (void)
 	while (true)
 		chThdSleepMilliseconds (500);
 }
+
+void faultCallback (void)
+{
+	// Fault handler implementation
+}

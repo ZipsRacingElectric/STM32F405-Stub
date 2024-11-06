@@ -15,6 +15,9 @@ CSRC =	$(ALLCSRC)		\
 		src/main.c		\
 		src/debug.c
 
+# Common library includes
+include common/src/fault_handler.mk
+
 # Compiler flags
 USE_OPT = -O0 
 
