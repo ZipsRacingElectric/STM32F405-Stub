@@ -23,7 +23,7 @@ int main (void)
 		chThdSleepMilliseconds (500);
 }
 
-void faultCallback (void)
+void hardFaultCallback (void)
 {
 	// Fault handler implementation
 }
