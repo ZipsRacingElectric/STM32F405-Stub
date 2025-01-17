@@ -1,21 +1,45 @@
 # STM32F405 Stub Project
 ## Dependencies
+- ChibiOS 21.11.3
 - make
 - arm-none-eabi-gcc
 - openocd
-- ChibiOS 21.11.3
 - FMPP - FreeMark Pre-Processor
 
 ## Setup
-- Clone this repo using 'git clone <TODO(Barach)>'
-- Initialize the repo's submodule using 'git submodule init <TODO(Barach)>'
-- Download and extract ChibiOS 21.11.3 (https://github.com/ChibiOS/ChibiOS/releases/tag/ver21.11.3).
-- Define the "CHIBIOS_SOURCE_PATH" environment variable to point to the location the ChibiOS source.
+- Clone this repo using github's SSH URL ```git clone <SSH URL>```
+- Initialize the repo's ```common``` submodule using ```git submodule init```
+- Download the ChibiOS 21.11.3 source from https://github.com/ChibiOS/ChibiOS/releases/tag/ver21.11.3.
+- Extract the archive's contents to a permanent location.
+- Define the ```CHIBIOS_SOURCE_PATH``` environment variable to point to the location the ChibiOS source.
 
 ### For Windows
-Most dependicies of this project are not natively built for Windows. A solution to this is to use MinGW, a <TODO(Barach)> that allows these programs to be used with Windows.
-- Install MinGW
-- <TODO(Barach)>
+Most dependicies of this project are not natively built for Windows. A solution to this is to use MinGW, a POSIX compatibility layer that allows these programs to be run in Windows.
+
+#### MinGW
+- Download and install MinGW-MSYS2 from https://www.mingw-w64.org/downloads.
+- Add MinGW's ```bin``` directory to your system path.
+- From a command-line, run ```bash --version``` to validate MinGW has been installed.
+
+#### Make
+- Make should be installed with MinGW.
+- From a command-line, run ```make -v``` to validate make has been installed.
+
+#### ARM GNU Toolchain
+- Download the ARM GNU toolchain for 32-bit bare-metal targets (arm-none-eabi) from https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads.
+- Extract the archive's contents to a permanent location and add the ```bin``` directory to your system path.
+- From a command-line, run ```arm-none-eabi-gcc -v``` to validate the ARM GNU toolchain has been installed.
+
+#### OpenOCD
+- Download OpenOCD for windows (https://github.com/openocd-org/openocd/)
+- Extract the archive's contents to a permanent location and add the ```bin``` directory to your system path.
+- From a command-line, run ```openocd -v``` to validate OpenOCD has been installed.
+
+#### FMPP
+- If your system does not have the Java runtime environment installed, install the latest version.
+- Download FMPP from https://sourceforge.net/projects/fmpp/.
+- Extract the archive's contents to a permanent location and add the ```bin``` directory to your system path.
+- From a command-line, run ```fmpp --version``` to validate FMPP has been installed.
 
 ### Recommended VS-Code Extensions
 - C/C++
@@ -27,16 +51,35 @@ Most dependicies of this project are not natively built for Windows. A solution 
 
 ## Usage
 ### Compilation
-- Use 'make' to compile the program. Files that have not been modified will not re-compiled.
-- Use 'make clean' to delete all build files.
+- Use ```make``` to compile the program. Files that have not been modified will not re-compiled.
+- Use ```make clean``` to delete all build files.
 
 ### Programming
-- Use 'make flash' to call OpenOCD. If modifications were made, the program will be recompiled.
+- Use ```make flash``` to call OpenOCD. If modifications were made, the program will be recompiled.
 
 ### Debugging
-- In VS-code, use 'Run Debugger'.
+- If not already, ensure the code has been compiled. Note that starting debugging does not automatically re-compile the application.
+- In VS-code, use ```Run Debugger``` to launch a debug session using the cortex debug extension.
 
-## Filesystem
-- build - Compilation output, includes the .elf file (the application file).
-- config - ChibiOS configuration files.
-- src - Project source code.
+## Directory Structure
+```
+.
+├── build                               - Directory for compilation output.
+├── common                              - STM32 common library, see the readme in here for more details.
+├── config                              - ChibiOS configuration files.
+│   ├── board.chcfg                     - Defines the pin mapping and clock frequency of the board.
+│   ├── chconf.h                        - ChibiOS RT configuration.
+│   ├── halconf.h                       - ChibiOS HAL configuration.
+│   ├── mcuconf.h                       - ChibiOS HAL driver configuration.
+├── doc                                 - Documentation folder.
+│   ├── chibios                         - ChibiOS documentation.
+│   ├── datasheets                      - Datasheets of important components on this board.
+│   ├── schematics                      - Schematics of this and related boards.
+│   └── software                        - Software documentation.
+├── makefile                            - Makefile for this application.
+└── src                                 - C source / include files.
+    ├── can                             - Code related to this device's CAN interface. This defines the messages this board
+    │                                     transmits and receives.
+    ├── controls                        - Code related to control systems. Torque vectoring implementations are defined here.
+    └── peripherals                     - Code related to board hardware and peripherals.
+```
