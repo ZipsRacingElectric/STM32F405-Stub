@@ -14,11 +14,15 @@
 - Define the ```CHIBIOS_SOURCE_PATH``` environment variable to point to the location the ChibiOS source.
 
 ### For Windows
-Most dependicies of this project are not natively built for Windows. A solution to this is to use MinGW, a POSIX compatibility layer that allows these programs to be run in Windows.
+Some dependicies of this project are not natively built for Windows. A solution to this is to use MinGW, a POSIX compatibility layer that allows these programs to be run in Windows.
 
 #### MinGW
-- Download and install MinGW-MSYS2 from https://www.mingw-w64.org/downloads.
-- Add MinGW's ```bin``` directory to your system path.
+- Download and install MinGW from https://sourceforge.net/projects/mingw/.
+- Install the following MinGW packages:
+	```mingw32-base```
+	```msys-base```
+	```mingw-developer-toolkit```
+- Add ```C:\MinGW\bin\``` and ```C:\MinGW\msys\1.0\bin\``` to your system path.
 - From a command-line, run ```bash --version``` to validate MinGW has been installed.
 
 #### Make
