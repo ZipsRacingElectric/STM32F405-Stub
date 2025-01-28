@@ -11,7 +11,7 @@
 - Initialize the repo's ```common``` submodule using ```git submodule init```
 - Download the ChibiOS 21.11.3 source from https://github.com/ChibiOS/ChibiOS/releases/tag/ver21.11.3.
 - Extract the archive's contents to a permanent location.
-- Define the ```CHIBIOS_SOURCE_PATH``` environment variable to point to the location the ChibiOS source.
+- Define the ```CHIBIOS_SOURCE_PATH``` environment variable to point to the location the ChibiOS source (Note: For compatibility with FMPP, this path should use the ```/``` separator rather than ```\```).
 
 ### For Windows
 Some dependicies of this project are not natively built for Windows. A solution to this is to use MinGW, a POSIX compatibility layer that allows these programs to be run in Windows.
