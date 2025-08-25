@@ -19,19 +19,19 @@ Before a bus can be used, it must first be configured and initialized. The `I2CC
 struct I2CConfig
 {
 	// Specifies the I2C mode (I2C or SMBus).
-	// - OPMODE_I2C				- Configured for I2C.
-	// - OPMODE_SMBUS_DEVICE	- Configured for SMBus as a device.
-	// - OPMODE_SMBUS_HOST		- Configured for SMBus as a host.
+	// - OPMODE_I2C          - Configured for I2C.
+	// - OPMODE_SMBUS_DEVICE - Configured for SMBus as a device.
+	// - OPMODE_SMBUS_HOST   - Configured for SMBus as a host.
 	i2copmode_t op_mode;
 
 	// Specifies the clock frequency, in Hertz. Must be set to a value lower than 400kHz.
 	uint32_t clock_speed;
 
 	// Specifies the I2C fast mode duty cycle.
-	// - STD_DUTY_CYCLE			- 1:1 duty cycle (standard).
-	// - FAST_DUTY_CYCLE_2		- 2:1 duty cycle.
-	// - FAST_DUTY_CYCLE_16_9	- 16:9 duty cycle.
-	i2cdutycycle_t	duty_cycle;
+	// - STD_DUTY_CYCLE       - 1:1 duty cycle (standard).
+	// - FAST_DUTY_CYCLE_2    - 2:1 duty cycle.
+	// - FAST_DUTY_CYCLE_16_9 - 16:9 duty cycle.
+	i2cdutycycle_t duty_cycle;
 };
 ```
 
@@ -63,18 +63,18 @@ msg_t i2cMasterTransmitTimeout (I2CDriver* i2cp, i2caddr_t addr,
 	uint8_t* rxbuf, size_t rxbytes, sysinterval_t timeout)
 ```
 Parameters:
-- `i2cp`    A pointer to the I2CDriver object.
-- `addr`    The 7-bit address of the slave device (without R/W bit).
-- `txbuf`   A pointer to the buffer to transmit the contents of.
-- `txbytes` The number of bytes to be transmitted.
-- `rxbuf`   A pointer to the buffer to write received data into.
-- `rxbytes` The number of bytes to be received, set it to 0 if you want transmit only.
-- `timeout` The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
+- `i2cp`	A pointer to the I2CDriver object.
+- `addr`	The 7-bit address of the slave device (without R/W bit).
+- `txbuf`	A pointer to the buffer to transmit the contents of.
+- `txbytes`	The number of bytes to be transmitted.
+- `rxbuf`	A pointer to the buffer to write received data into.
+- `rxbytes`	The number of bytes to be received, set it to 0 if you want transmit only.
+- `timeout`	The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
 
 Return Value: The operation status.
-- `MSG_OK`      - The operation was successful.
-- `MSG_RESET`   - One or more I2C errors occurred.
-- `MSG_TIMEOUT` - A timeout occurred before the operation could end.
+- `MSG_OK`		- The operation was successful.
+- `MSG_RESET`	- One or more I2C errors occurred.
+- `MSG_TIMEOUT`	- A timeout occurred before the operation could end.
 
 ### Read Operation
 If the device does not require writing, the `i2cMasterReceiveTimeout` function can be used to perform a single read operation.
@@ -83,16 +83,16 @@ msg_t i2cMasterReceiveTimeout (I2CDriver* i2cp, i2caddr_t addr,
 	uint8_t* rxbuf, size_t rxbytes, sysinterval_t timeout)
 ```
 Parameters:
-- `i2cp`    A pointer to the I2CDriver object.
-- `addr`    The 7-bit address of the slave device (without R/W bit).
-- `rxbuf`   A pointer to the buffer to write received data into.
-- `rxbytes` The number of bytes to be received, set it to 0 if you want transmit only.
-- `timeout` The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
+- `i2cp`	A pointer to the I2CDriver object.
+- `addr`	The 7-bit address of the slave device (without R/W bit).
+- `rxbuf`	A pointer to the buffer to write received data into.
+- `rxbytes`	The number of bytes to be received, set it to 0 if you want transmit only.
+- `timeout`	The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
 
 Return Value: The operation status.
-- `MSG_OK`      - The operation was successful.
-- `MSG_RESET`   - One or more I2C errors occurred.
-- `MSG_TIMEOUT` - A timeout occurred before the operation could end.
+- `MSG_OK`		- The operation was successful.
+- `MSG_RESET`	- One or more I2C errors occurred.
+- `MSG_TIMEOUT`	- A timeout occurred before the operation could end.
 
 ## Complete Example
 This example shows how all the above functions can be combined. While it doesn't do anything meaningful, more useful applications should be able to be extrapolated from this.
