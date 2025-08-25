@@ -16,7 +16,8 @@ int main (void)
 	chSysInit ();
 
 	// Debug Initialization
-	debugInit ("STMF405 Stub Project");
+	ioline_t ledLine = LINE_LED_HEARTBEAT;
+	debugHeartbeatStart (&ledLine, LOWPRIO);
 
 	// Do nothing.
 	while (true)
