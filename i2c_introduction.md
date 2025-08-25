@@ -38,7 +38,7 @@ struct I2CConfig
 ### Start
 After defining a configuration a bus can be initialized using the `i2cStart` function. This function applies the configuration and activates the specified bus. No other operations can be used on a bus until this is performed.
 ```
-msg_t i2cStart(I2CDriver *i2cp, const I2CConfig *config)
+msg_t i2cStart (I2CDriver *i2cp, const I2CConfig *config)
 ```
 Parameters:
 - `i2cp` - A pointer to the `I2CDriver` object to initialize.
