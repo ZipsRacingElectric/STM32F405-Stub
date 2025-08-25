@@ -63,17 +63,17 @@ msg_t i2cMasterTransmitTimeout (I2CDriver* i2cp, i2caddr_t addr,
 	uint8_t* rxbuf, size_t rxbytes, sysinterval_t timeout)
 ```
 Parameters:
-- `i2cp`		A pointer to the I2CDriver object.
-- `addr`		The 7-bit address of the slave device (without R/W bit).
-- `txbuf`		A pointer to the buffer to transmit the contents of.
-- `txbytes`		The number of bytes to be transmitted.
-- `rxbuf`		A pointer to the buffer to write received data into.
-- `rxbytes`		The number of bytes to be received, set it to 0 if you want transmit only.
-- `timeout`		The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
+- `i2cp`    A pointer to the I2CDriver object.
+- `addr`    The 7-bit address of the slave device (without R/W bit).
+- `txbuf`   A pointer to the buffer to transmit the contents of.
+- `txbytes` The number of bytes to be transmitted.
+- `rxbuf`   A pointer to the buffer to write received data into.
+- `rxbytes` The number of bytes to be received, set it to 0 if you want transmit only.
+- `timeout` The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
 
 Return Value: The operation status.
-- `MSG_OK` - The operation was successful.
-- `MSG_RESET` - One or more I2C errors occurred.
+- `MSG_OK`      - The operation was successful.
+- `MSG_RESET`   - One or more I2C errors occurred.
 - `MSG_TIMEOUT` - A timeout occurred before the operation could end.
 
 ### Read Operation
@@ -83,15 +83,15 @@ msg_t i2cMasterReceiveTimeout (I2CDriver* i2cp, i2caddr_t addr,
 	uint8_t* rxbuf, size_t rxbytes, sysinterval_t timeout)
 ```
 Parameters:
-- `i2cp`		A pointer to the I2CDriver object.
-- `addr`		The 7-bit address of the slave device (without R/W bit).
-- `rxbuf`		A pointer to the buffer to write received data into.
-- `rxbytes`		The number of bytes to be received, set it to 0 if you want transmit only.
-- `timeout`		The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
+- `i2cp`    A pointer to the I2CDriver object.
+- `addr`    The 7-bit address of the slave device (without R/W bit).
+- `rxbuf`   A pointer to the buffer to write received data into.
+- `rxbytes` The number of bytes to be received, set it to 0 if you want transmit only.
+- `timeout` The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
 
 Return Value: The operation status.
-- `MSG_OK` - The operation was successful.
-- `MSG_RESET` - One or more I2C errors occurred.
+- `MSG_OK`      - The operation was successful.
+- `MSG_RESET`   - One or more I2C errors occurred.
 - `MSG_TIMEOUT` - A timeout occurred before the operation could end.
 
 ## Complete Example
