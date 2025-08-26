@@ -1,5 +1,5 @@
 # Writing CAN Nodes - Zips Racing
-The STM32F405 common library further abstracts ChibiOS's CAN interface further with the CAN node interface. The main purpose of a CAN node is to decode the CAN messages of a specific devices a the CAN-bus (sensors and control units, for example). The CAN node loosely uses an inheritance pattern, meaning there is an interface (the `canNode_t` struct) and then there are implementors of said interface (ex. `bms_t` or `amk_t`). The interface is never meant to be directly instanced, rather it simply describes how specific CAN nodes should *look*.
+The STM32F405 common library further abstracts ChibiOS's CAN interface with the CAN node interface. The main purpose of a CAN node is to decode the CAN messages of a specific devices a the CAN-bus (sensors and control units, for example). The CAN node loosely uses an inheritance pattern, meaning there is an interface (the `canNode_t` struct) and then there are implementors of said interface (ex. `bms_t` or `amk_t`). The interface is never meant to be directly instanced, rather it simply describes how specific CAN nodes should *look*.
 
 ## Defining a Structure
 In order to make different implementations of the CAN node appear the same, they must begin with the same fields. This can be done using the `CAN_NODE_FIELDS` macro. For example, consider the below implementation:
@@ -82,11 +82,13 @@ Header file `test_node.h`:
 
 typedef struct
 {
-	/// @brief The CAN driver of the bus the node belongs to. Used for sending messages to the node.
+	// The CAN driver of the bus the node belongs to. Used for sending messages to the node.
 	CANDriver* driver;
 
-	/// @brief The interval to timeout the node's data after.
+	// The interval to timeout the node's data after.
 	sysinterval_t timeoutPeriod;
+
+	// If we have other application-specific things, add them here...
 } testNodeConfig_t;
 
 typedef struct
@@ -127,6 +129,7 @@ typedef struct
 
 // Functions ------------------------------------------------------------------------------------------------------------------
 
+// User function, initializes the node.
 void testNodeInit (testNode_t* testNode, const testNodeConfig_t* config);
 
 #endif // TEST_NODE_H
@@ -139,26 +142,27 @@ Source file `test_node.c`:
 
 // Message IDs ----------------------------------------------------------------------------------------------------------------
 
-#define MESSAGE_0_ID 0x10A
-#define MESSAGE_1_ID 0x10B
-#define MESSAGE_2_ID 0x10C
+#define MESSAGE_0_ID 0x10A					// The standard ID of the 1st message.
+#define MESSAGE_1_ID 0x10B					// The standard ID of the 2nd message.
+#define MESSAGE_2_ID 0x10C					// The standard ID of the 3rd message.
 
-#define MESSAGE_0_FLAG_POS 0x00
-#define MESSAGE_1_FLAG_POS 0x01
-#define MESSAGE_2_FLAG_POS 0x02
+#define MESSAGE_0_FLAG_POS 0x00				// The flag index of the 1st message.
+#define MESSAGE_1_FLAG_POS 0x01				// The flag index of the 2nd message.
+#define MESSAGE_2_FLAG_POS 0x02				// The flag index of the 3rd message.
 
 // Function Prototypes --------------------------------------------------------------------------------------------------------
 
+// Implements the canReceiveHandler_t signature. See 'Implementing a Receive Handler' for what this does.
 int8_t testNodeReceiveHandler (void* node, CANRxFrame* frame);
 
 // Functions ------------------------------------------------------------------------------------------------------------------
 
 void testNodeInit (testNode_t* testNode, const testNodeConfig_t* config)
 {
-	// Have to initialize the CAN node fields of the structure.
+	// Here we have to initialize the canNode_t portion of the structure.
 	canNodeConfig_t nodeConfig =
 	{
-		// Use the specified CANDriver.
+		// Use the user-specified CANDriver.
 		.driver = config->driver,
 
 		// Use the internal receive handler we've defined.
@@ -167,7 +171,7 @@ void testNodeInit (testNode_t* testNode, const testNodeConfig_t* config)
 		// We don't care about timeouts, so no handler needed.
 		.timeoutHandler = NULL,
 
-		// Use the specified timeout.
+		// Use the user-specified timeout.
 		.timeoutPeriod = config->timeoutPeriod,
 
 		// We have 3 total messages (flags 0, 1, and 2).
@@ -178,6 +182,7 @@ void testNodeInit (testNode_t* testNode, const testNodeConfig_t* config)
 
 // Receive Functions ----------------------------------------------------------------------------------------------------------
 
+// Decodes the 1st message
 void testNodeHandleMessage0 (testNode_t* testNode, CANRxFrame* frame)
 {
 	// This signal is a 16-bit unsigned integer, transmitted in little-endian.
@@ -200,6 +205,7 @@ void testNodeHandleMessage0 (testNode_t* testNode, CANRxFrame* frame)
 	// Note that all other signals in this example are little-endian, for convenience.
 }
 
+// Decodes the 2nd message
 void testNodeHandleMessage1 (testNode_t* testNode, CANRxFrame* frame)
 {
 	// Since this is little-endian, we can just copy directly from the buffer as we did with the first message.
@@ -212,6 +218,7 @@ void testNodeHandleMessage1 (testNode_t* testNode, CANRxFrame* frame)
 	testNode->signedField = (int16_t) frame->data16 [2];
 }
 
+// Decodes the 3rd message
 void testNodeHandleMessage2 (testNode_t* testNode, CANRxFrame* frame)
 {
 	// If the node has a scale factor and offset, we can convert it into a float.
@@ -244,25 +251,28 @@ int8_t testNodeReceiveHandler (void* node, CANRxFrame* frame)
 	// Get the ID of the message. If it is an extended ID, we use the EID field.
 	uint16_t id = frame->SID;
 
-	// Identify and handle the message.
+	// Identify whether the message belongs to this node, and, if so, which message it is.
 	if (id == MESSAGE_0_ID)
 	{
+		// Handle message 0.
 		testNodeHandleMessage0 (testNode, frame);
 		return MESSAGE_0_FLAG_POS;
 	}
 	else if (id == MESSAGE_1_ID)
 	{
+		// Handle message 1.
 		testNodeHandleMessage1 (testNode, frame);
 		return MESSAGE_1_FLAG_POS;
 	}
 	else if (id == MESSAGE_2_ID)
 	{
+		// Handle message 2.
 		testNodeHandleMessage2 (testNode, frame);
 		return MESSAGE_2_FLAG_POS;
 	}
 	else
 	{
-		// Message doesn't belong to this node.
+		// Message doesn't belong to this node, we return -1 to indicate this.
 		return -1;
 	}
 }
