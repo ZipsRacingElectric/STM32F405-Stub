@@ -10,26 +10,8 @@ In ChibiOS, I2C is exposed through the CAN driver. The comprehensive driver docu
 
 An excerpt of the most useful functionality is provided here.
 
-### Configuration
-TODO(Barach): Do I even want to talk about this?
-
-Before a bus can be used, it must first be configured and initialized. The `CANConfig` structure defines configuration options.
-
-```
-struct CANConfig
-{
-	// CAN MCR register initialization data. Note some bits in this register
-	// are enforced by the driver regardless their status in this field.
-	// Documentation for this
-	uint32_t mcr;
-
-	// CAN BTR register initialization data. Note some bits in this register
-	// are enforced by the driver regardless their status in this field.
-	uint32_t btr;
-}
-```
-
 ### Transmit Frame
+A message (also called a frame) that the user intents to transmit is represented by the `CANTxFrame` struct.
 ```
 struct CANTxFrame
 {
@@ -56,6 +38,8 @@ struct CANTxFrame
 		uint32_t EID:29;
 	};
 
+	// This union is for accessing the payload of the frame, all of the fields point to the same data. The reason different
+	// datatypes may be used is for convenience.
 	union
 	{
 		// The payload of the message, accessed as an array of 8 8-bit integers.
@@ -74,7 +58,7 @@ struct CANTxFrame
 ```
 
 ### Transmitting Messages
-The specified frame is queued for transmission, if the hardware queue is full then the invoking thread is queued. Trying to transmit while in sleep mode simply enqueues the thread.
+In order to broadcast (also called transmit) a message, the `canTransmitTimeout` function should be used. The message to be transmitted is a user-created instance of the `CANTxFrame` struct.
 ```
 msg_t canTransmitTimeout(CANDriver* canp, canmbx_t mailbox, const CANTxFrame* ctfp, sysinterval_t timeout)
 ```
@@ -92,6 +76,7 @@ Return Value:
 - `MSG_RESET`	- The driver has been stopped while waiting.
 
 ### Receive Frame
+A message (also called a frame) that is received by a device is represented by the `CANRxFrame` struct.
 ```
 struct CANRxFrame
 {
@@ -118,6 +103,8 @@ struct CANRxFrame
 		uint32_t EID:29;
 	};
 
+	// This union is for accessing the payload of the frame, all of the fields point to the same data. The reason different
+	// datatypes may be used is for convenience.
 	union
 	{
 		// The payload of the message, accessed as an array of 8 8-bit integers.
@@ -136,7 +123,7 @@ struct CANRxFrame
 ```
 
 ### Receiving Messages
-The function waits until a frame is received. Note Trying to receive while in sleep mode simply enqueues the thread.
+In order to receive a message, the `canReceiveTimeout` function should be used. This function doesn't allow the user to specify *what* message is received, it will simply select the first message received, regardless of its identifier. To check what message was received, the contents of the `CANRxFrame` can be checked.
 ```
 msg_t canReceiveTimeout(CANDriver* canp, canmbx_t mailbox, CANRxFrame* crfp, sysinterval_t timeout)
 ```

@@ -1,7 +1,7 @@
-# Writing CAN Nodes - Zips Racing
-The STM32F405 common library further abstracts ChibiOS's CAN interface with the CAN node interface. The main purpose of a CAN node is to decode the CAN messages of a specific devices a the CAN-bus (sensors and control units, for example). The CAN node loosely uses an inheritance pattern, meaning there is an interface (the `canNode_t` struct) and then there are implementors of said interface (ex. `bms_t` or `amk_t`). The interface is never meant to be directly instanced, rather it simply describes how specific CAN nodes should *look*.
+# Introduction to CAN Nodes - Zips Racing
+The STM32F405 common library further abstracts ChibiOS's CAN interface with the CAN node interface. The main purpose of a CAN node is to decode the CAN messages of a specific devices a the CAN-bus (sensors and control units, for example). The CAN node loosely uses an inheritance pattern, meaning there is an interface (the `canNode_t` struct) and then there are implementors of said interface (ex. `bms_t` or `amk_t`). The interface is never meant to be directly instanced, rather it simply describes how specific CAN nodes should look.
 
-## Defining a Structure
+## Declaration
 In order to make different implementations of the CAN node appear the same, they must begin with the same fields. This can be done using the `CAN_NODE_FIELDS` macro. For example, consider the below implementation:
 ```
 typedef struct
