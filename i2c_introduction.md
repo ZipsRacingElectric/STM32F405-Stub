@@ -1,10 +1,9 @@
 # Introdution to the I2C Communication Protocol - Zips Racing
 I2C is a widely used serial communication protocol aimed at short-distance communication between integrated circuits. Because of its simple nature, I2C is a popular choice for expanding the functionality of microcontrollers. Some common I2C devices are EEPROMs, I/O expanders, DACs, etc.
 
-For a basic introduction to the I2C protocol see the below video.
+For a basic introduction to the I2C protocol, see the video below:
 
-[Inter-Integrated Circuit (I2C) Basics (https://www.youtube.com/watch?v=CAvawEcxoPU)](https://www.youtube.com/watch?v=IcPUE-kTN50)
-- TODO(Barach): Maybe this? https://www.youtube.com/watch?v=CAvawEcxoPU
+[Rohde & Schwarz - Understanding I2C (https://www.youtube.com/watch?v=CAvawEcxoPU)](https://www.youtube.com/watch?v=CAvawEcxoPU)
 
 ## ChibiOS Interface
 In ChibiOS, I2C is exposed through the I2C driver. The comprehensive driver documentation can be found at the below URL, however it is quite technical.
@@ -38,19 +37,19 @@ struct I2CConfig
 ### Start
 After defining a configuration a bus can be initialized using the `i2cStart` function. This function applies the configuration and activates the specified bus. No other operations can be used on a bus until this is performed.
 ```
-msg_t i2cStart (I2CDriver *i2cp, const I2CConfig *config)
+msg_t i2cStart (I2CDriver* i2cp, const I2CConfig* config)
 ```
 Parameters:
 - `i2cp` - A pointer to the `I2CDriver` object to initialize.
 - `config` - A pointer to the `I2CConfig` configuration to use.
 
-Return Value: The operation status.
+Return Value:
 - `MSG_OK` - The operation was successful.
 
 ### Stop
 To deactivate a bus, the `i2cStop` function can be used. No other operations can be on a bus after this operation is performed (except starting the bus again). This function is not typically needed.
 ```
-void i2cStop (I2CDriver *i2cp)
+void i2cStop (I2CDriver* i2cp)
 ```
 Parameters:
 - `i2cp` - A pointer to the `I2CDriver` object to stop.
@@ -65,13 +64,13 @@ msg_t i2cMasterTransmitTimeout (I2CDriver* i2cp, i2caddr_t addr,
 Parameters:
 - `i2cp`	A pointer to the I2CDriver object.
 - `addr`	The 7-bit address of the slave device (without R/W bit).
-- `txbuf`	A pointer to the buffer to transmit the contents of.
+- `txbuf`	A pointer to the buffer to transmit the contents of. Note the byte at index 0 is the first transmitted, followed by the byte at index 1, and so on.
 - `txbytes`	The number of bytes to be transmitted.
-- `rxbuf`	A pointer to the buffer to write received data into.
+- `rxbuf`	A pointer to the buffer to write received data into. Note the first received byte is placed at index 0, then the next at index 1, and so on.
 - `rxbytes`	The number of bytes to be received, set it to 0 if you want transmit only.
 - `timeout`	The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
 
-Return Value: The operation status.
+Return Value:
 - `MSG_OK`		- The operation was successful.
 - `MSG_RESET`	- One or more I2C errors occurred.
 - `MSG_TIMEOUT`	- A timeout occurred before the operation could end.
@@ -85,11 +84,11 @@ msg_t i2cMasterReceiveTimeout (I2CDriver* i2cp, i2caddr_t addr,
 Parameters:
 - `i2cp`	A pointer to the I2CDriver object.
 - `addr`	The 7-bit address of the slave device (without R/W bit).
-- `rxbuf`	A pointer to the buffer to write received data into.
+- `rxbuf`	A pointer to the buffer to write received data into. Note the first received byte is placed at index 0, then the next at index 1, and so on.
 - `rxbytes`	The number of bytes to be received, set it to 0 if you want transmit only.
 - `timeout`	The number of ticks before the operation times out. Use ```TIME_INFINITE``` for no timeout.
 
-Return Value: The operation status.
+Return Value:
 - `MSG_OK`		- The operation was successful.
 - `MSG_RESET`	- One or more I2C errors occurred.
 - `MSG_TIMEOUT`	- A timeout occurred before the operation could end.
