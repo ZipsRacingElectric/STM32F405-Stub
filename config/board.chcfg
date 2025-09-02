@@ -85,45 +85,45 @@
         Mode="Input"
         Alternate="0" />
       <pin8
-        ID=""
+        ID="CAN1_STBY"
         Type="PushPull"
         Level="High"
         Speed="Minimum"
-        Resistor="PullUp"
-        Mode="Input"
+        Resistor="Floating"
+        Mode="Output"
         Alternate="0" />
       <pin9
-        ID=""
+        ID="UART1_TX"
         Type="PushPull"
         Level="High"
         Speed="Minimum"
-        Resistor="PullUp"
-        Mode="Input"
-        Alternate="0" />
+        Resistor="Floating"
+        Mode="Alternate"
+        Alternate="7" />
       <pin10
-        ID=""
+        ID="UART1_RX"
         Type="PushPull"
         Level="High"
         Speed="Minimum"
-        Resistor="PullUp"
-        Mode="Input"
-        Alternate="0" />
+        Resistor="Floating"
+        Mode="Alternate"
+        Alternate="7" />
       <pin11
-        ID=""
+        ID="CAN1_RX"
         Type="PushPull"
         Level="High"
         Speed="Minimum"
-        Resistor="PullUp"
-        Mode="Input"
-        Alternate="0" />
+        Resistor="Floating"
+        Mode="Alternate"
+        Alternate="9" />
       <pin12
-        ID=""
+        ID="CAN1_TX"
         Type="PushPull"
         Level="High"
         Speed="Minimum"
-        Resistor="PullUp"
-        Mode="Input"
-        Alternate="0" />
+        Resistor="Floating"
+        Mode="Alternate"
+        Alternate="9" />
       <pin13
         ID="SWDIO"
         Type="PushPull"
