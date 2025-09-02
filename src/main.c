@@ -18,6 +18,7 @@ int main (void)
 	// Debug Initialization
 	ioline_t ledLine = LINE_LED_HEARTBEAT;
 	debugHeartbeatStart (&ledLine, LOWPRIO);
+	debugSerialInit (&SD1, NULL);
 
 	// Do nothing.
 	while (true)

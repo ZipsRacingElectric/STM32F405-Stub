@@ -40,9 +40,6 @@ ULIBDIR =
 # Libraries
 ULIBS =
 
-# ChibiOS extra includes
-include $(CHIBIOS)/os/hal/lib/streams/streams.mk
-
 # Common toolchain includes
 include common/common.mk
 include common/make/openocd_low_speed.mk
