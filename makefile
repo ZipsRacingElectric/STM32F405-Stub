@@ -23,22 +23,22 @@ include common/src/debug.mk
 include common/src/fault_handler.mk
 
 # Compiler flags
-USE_OPT = -Og -Wall -Wextra
+USE_OPT += -Og -Wall -Wextra
 
 # C macro definitions
-UDEFS =
+UDEFS +=
 
 # ASM definitions
-UADEFS =
+UADEFS +=
 
 # Include directories
-UINCDIR =
+UINCDIR +=
 
 # Library directories
-ULIBDIR =
+ULIBDIR +=
 
 # Libraries
-ULIBS =
+ULIBS +=
 
 # Common toolchain includes
 include common/common.mk
