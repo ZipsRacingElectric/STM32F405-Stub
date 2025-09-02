@@ -5,10 +5,11 @@ PROJECT = stub
 CHIBIOS  := $(CHIBIOS_SOURCE_PATH)
 
 # Directories
-CONFDIR  := ./config
-BUILDDIR := ./build
-DEPDIR   := ./build/dep
-BOARDDIR := ./build/board
+CONFDIR		:= ./config
+BUILDDIR	:= ./build
+DEPDIR		:= ./build/dep
+BOARDDIR	:= ./build/board
+COMMONDIR	:= ./common
 
 # Includes
 ALLINC += src
@@ -43,7 +44,8 @@ ULIBS =
 include $(CHIBIOS)/os/hal/lib/streams/streams.mk
 
 # Common toolchain includes
-include common/makefile
+include common/common.mk
+include common/make/openocd_low_speed.mk
 
 # ChibiOS compilation hooks
 PRE_MAKE_ALL_RULE_HOOK: $(BOARD_FILES) $(CLANGD_FILE)
